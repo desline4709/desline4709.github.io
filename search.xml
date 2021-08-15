@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search> 
+  
+  
+    
+    <entry>
+      <title>智能合约与Solidity学习（一）</title>
+      <link href="/2021/08/15/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6%E4%B8%8ESolidity%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%80%EF%BC%89/"/>
+      <url>/2021/08/15/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6%E4%B8%8ESolidity%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%80%EF%BC%89/</url>
+      
+        <content type="html"><![CDATA[<h1 id="智能合约与Solidity学习心得（一）"><a href="#智能合约与Solidity学习心得（一）" class="headerlink" title="智能合约与Solidity学习心得（一）"></a><center>智能合约与Solidity学习心得（一）</center></h1><h2 id="一、起源"><a href="#一、起源" class="headerlink" title="一、起源"></a>一、起源</h2><p>智能合约(Smart Contract)，顾名思义，是具有“智能”的合约。所谓智能，是可以自动实现一定的功能；所谓合约，就是一种标准或规则用以约束和规范一些行为。智能合约的概念很早就被提出，但是这个概念在近些年来才广为流传，并且作为区块链的伴生概念，有了新的意义。智能合约部署的一个较为知名的案例就是以太坊(Ethereum)。那么下面我们首先来看一下，什么是区块链和以太坊。</p><h3 id="区块链与以太坊"><a href="#区块链与以太坊" class="headerlink" title="区块链与以太坊"></a>区块链与以太坊</h3><h4 id="区块链"><a href="#区块链" class="headerlink" title="区块链"></a>区块链</h4><p>区块链(Blockchain)起源于2008年的一篇论文《比特币:一种点对点的电子现金系统》，作者化名为中本聪。在这篇文章中，中本聪先生根据现有的<strong>P2P技术</strong>、<strong>加密技术</strong>等，提出了区块链的概念，并以这些技术开发了一种数字货币——<strong>比特币</strong>的交易系统。</p><p>区块链技术从本质上讲实可以分为区块(block)和链(chain)两大部分，区块作为记录交易(transaction)的载体，将区块连接成链就成为了区块链。</p><p>区块链的主要特点是：</p><ul><li><p>去中心化</p><p>去中心化是与中心化相对的概念，像我们平常使用的一些系统，绝大多数是中心化的，其中的信息由我们信任的企业或组织进行保管，如银行的交易记录，个人的身份信息等。而去中心化就是不存在上述的机构专门存储信息，而是由每个参与者进行信息的存储，这样一来，当参与者足够多的时候，少数谬误在“对账”的过程中被纠正。比特币交易系统作为区块链的首个应用者就采用了这种方式进行信息记录。</p></li><li><p>共识机制</p><p>共识机制就是达成共识的方式。由于区块链是去中心化的，也就是说没有一个共同的信任单位有“权威”领导大家，所以在这样的系统中，每笔交易的达成都需要通过共识机制来进行完成。常见的共识机制如下：</p><ul><li>工作量证明机制(PoW)</li><li>权益证明机制(PoS)</li><li>股份授权证明机制(DPoS)</li></ul><p>这里以比特币交易系统为例，解释比特币交易系统中的共识机制——工作量证明机制。上文中提到，每笔交易的达成需要通过共识机制，同时，每笔交易都将记录在区块之中，因此“记账”这个行为的产生需要达成共识机制。比特币交易系统采用的是PoW，就是通过计算随机哈希散列的数值来进行记账，最先计算出的参与者可以进行“记账”，这需要很大的计算资源。那么这些参与者为什么要争抢记账权呢，原因就是记账的人将被奖励比特币，这也是比特币产生的方式。</p><p>所以总而言之，比特币交易系统通过奖励比特币的方式激励参与者争抢记账权，而记账权争抢的规则就是进行大量的计算，一般而言，算力越大的一方就更有可能抢到记账权，其工作量也就越大，因此这种方式叫工作量证明机制，而争抢记账权的规则，就是<strong>共识机制</strong>。</p></li><li><p>智能合约</p><p>在初始的比特币系统中，智能合约的概念还不明显，因此我们将在下文介绍以太坊时，以以太坊为例介绍智能合约。</p></li></ul><h4 id="以太坊"><a href="#以太坊" class="headerlink" title="以太坊"></a>以太坊</h4><p>由于比特币的交易系统仅支持简单的P2P加密交易的过程，即付款方向收款方的加密钱包中发送一定数量的比特币，其中的身份认证环节是有比特币交易系统自带的一种脚本语言实现的，但这种脚本语言在比特币交易系统中仅仅用作支持这一种场景，由此产生了以太坊，作为一种新式交易的平台。</p><p>以太坊(Ethereum)，是一个平台，为用户提供各种模块使得用户来搭建自己的应用，而以太坊上的“应用”，实质上就是智能合约。在以太坊上搭建的智能合约可以使得用户“自动化”进行购买，就像搭建了一台有规则的自动贩卖机一样。</p><p>由此可见，智能合约实质上就是一种人为制定的，部署在区块链上的用于自动处理交易或完成特定功能的可执行的程序。既然智能合约的本质是一种程序，就需要运行环境和一定的编程语言来编写。</p><h2 id="二、智能合约与Solidity"><a href="#二、智能合约与Solidity" class="headerlink" title="二、智能合约与Solidity"></a>二、智能合约与Solidity</h2><p>智能合约作为一段可以实现某种功能的程序，其最初被应用于以太坊，而在以太坊上运行的环境就是以太坊虚拟机(EVM)，而实际进行编写智能合约的语言是Solidity。编译器通过编译Solidity源码，将其转换为能在EVM上运行的程序，在部署到EVM后，则可作为一种智能合约被使用。</p><p>实际上，我们可以通过 <code>Java</code> 语言进行类比理解。我们首先编写Java源码，然后通过编译器将其转换为<code>JavaClass</code>文件，并在<code>Java</code><strong>虚拟机</strong>(JVM)上进行运行。</p><p>一般来说，在本地部署EVM较为复杂，因此对于学习Solidity的人员，需要通过<a href="https://remix.ethereum.org/">Remix</a>来进行线上的学习和调试，在有一定的基础后，再进行本地的EVM部署等操作。</p><p>从下期开始将总结Solidity的学习心得，敬请期待♪(^∇^*)~~</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 区块链 </tag>
+            
+            <tag> 智能合约 </tag>
+            
+            <tag> 心得体会 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>first</title>
+      <link href="/2021/08/05/first/"/>
+      <url>/2021/08/05/first/</url>
+      
+        <content type="html"><![CDATA[<h2 id="My-First-Blog"><a href="#My-First-Blog" class="headerlink" title="My First Blog"></a>My First Blog</h2><p>一个实验空白章（来自屑作者的留言~</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 初始化 </tag>
+            
+            <tag> 灌水 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Hello World</title>
+      <link href="/2021/08/05/hello-world/"/>
+      <url>/2021/08/05/hello-world/</url>
+      
+        <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo new <span class="token string">"My New Post"</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo server<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo generate<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo deploy<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 初始化 </tag>
+            
+            <tag> 灌水 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+  
+  
+</search>
