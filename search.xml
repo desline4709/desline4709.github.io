@@ -4,6 +4,29 @@
   
     
     <entry>
+      <title>智能合约与Solodity学习（二）</title>
+      <link href="/2021/08/23/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6%E4%B8%8ESolodity%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%8C%EF%BC%89/"/>
+      <url>/2021/08/23/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6%E4%B8%8ESolodity%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%8C%EF%BC%89/</url>
+      
+        <content type="html"><![CDATA[<h1 id="Solidity基本知识"><a href="#Solidity基本知识" class="headerlink" title="Solidity基本知识"></a>Solidity基本知识</h1><h2 id="一、Hello-World"><a href="#一、Hello-World" class="headerlink" title="一、Hello World"></a>一、Hello World</h2><p>由上一期文章可以知道，Solidity是一种专用与编写智能合约的编程语言，本期就将介绍一些关于Solidity的基本语法知识。本部分将介绍如何部署自己的第一个智能合约，以及相应的代码含义。</p><pre class="line-numbers language-solidity" data-language="solidity"><code class="language-solidity"><span class="token keyword">pragma</span> <span class="token keyword">solidity</span> <span class="token operator">^</span><span class="token version number">0.4.25</span><span class="token punctuation">;</span><span class="token keyword">contract</span> <span class="token class-name">HelloWorld</span><span class="token punctuation">&#123;</span><span class="token keyword">function</span> <span class="token function">SayHello</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">returns</span><span class="token punctuation">(</span><span class="token builtin">string</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span><span class="token keyword">return</span> <span class="token string">'Hello World'</span><span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>在此之后，我们在Remix上选择对应版本的编译器（&gt;=0.4.25&lt;0.5），点击编译，之后在部署的界面点击deploy进行部署，就可以在下面的<code>deployed contracts</code>中找到刚刚部署的智能合约，通过点击SayHello进行交互。</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 区块链 </tag>
+            
+            <tag> 智能合约 </tag>
+            
+            <tag> 心得体会 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>智能合约与Solidity学习（一）</title>
       <link href="/2021/08/15/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6%E4%B8%8ESolidity%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%80%EF%BC%89/"/>
       <url>/2021/08/15/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6%E4%B8%8ESolidity%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%80%EF%BC%89/</url>
