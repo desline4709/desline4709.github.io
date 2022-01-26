@@ -1,0 +1,2039 @@
+<!DOCTYPE html>
+<html>
+  <!-- meta/link... -->
+  
+
+
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+  <title>Django学习笔记（一） | Desline - Keep moving</title>
+
+  
+    
+<link rel="stylesheet" href="/js/aos/aos.css">
+
+  
+
+  <link rel="icon" type="image/jpeg" href="/yousa.jpeg">
+  <link rel="stylesheet" href="https://at.alicdn.com/t/font_1911880_c1nvbyezg17.css">
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+  
+  
+<link rel="stylesheet" href="/css/animate.min.css">
+
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+    
+<link rel="stylesheet" href="/js/fancybox/jquery.fancybox.min.css">
+
+  
+  
+    
+<link rel="stylesheet" href="/js/shareJs/share.min.css">
+
+  
+  <style>
+        @media (max-width: 992px) {
+            #waifu {
+                display: none;
+            }
+        }
+    </style>
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+
+    
+        <script src="/js/valine/av-min@3.0.4.js"></script>
+        <script src="https://cdn.jsdelivr.net/gh/HCLonely/Valine@latest/dist/Valine.min.js"></script>
+    
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+  
+  <!-- 依赖于jquery和vue -->
+  <script src="/js/jquery3.5.1.js"></script>
+  <script src="/js/vue2.6.11.js"></script>
+  
+  <body>
+    <!-- 预加载动画 -->
+    <!-- 页面预加载动画 -->
+
+<div id='loader'>
+  <link rel="stylesheet" href="/js/loaded/index.css" >
+  <div class="loading-left-bg"></div>
+  <div class="loading-right-bg"></div>
+  <div class="spinner-box">
+    <div class="configure-border-1">
+      <div class="configure-core"></div>
+    </div>
+    <div class="configure-border-2">
+      <div class="configure-core"></div>
+    </div>
+    <div class="loading-word">加载中...</div>
+  </div>
+</div>
+
+<script>
+  var endLoading = function () {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loader').classList.add("loading");
+  }
+  window.addEventListener('DOMContentLoaded',endLoading);
+  
+</script>
+
+    
+    <!-- 判断是否为暗黑风格 -->
+    <!-- 判断是否为黑夜模式 -->
+<script>
+  let isDark = JSON.parse(localStorage.getItem('dark')) || JSON.parse('false');
+
+  if (isDark) {
+    $(document.body).addClass('darkModel');
+  }
+</script>
+
+    <!-- 头部导航等 -->
+    
+<header class="header " id="navHeader"
+  style="position: fixed;
+  left: 0; top: 0; z-index: 10;width: 100%;"
+>
+  <div class="header-content">
+    <div class="bars">
+      <div id="appDrawer" class="sidebar-image">
+  <div class="drawer-box-icon">
+    <i class="fa fa-bars" aria-hidden="true" @click="showDialogDrawer"></i>
+  </div>
+  
+  <transition name="fade">
+    <div class="drawer-box_mask" v-cloak style="display: none;" v-show="visible" @click.self="cancelDialogDrawer">
+    </div>
+  </transition>
+  <div class="drawer-box" :class="{'active': visible}">
+    <div class="drawer-box-head bg-color">
+      <img class="drawer-box-head_logo" src="/yousa.jpeg" alt="logo">
+      <h3 class="drawer-box-head_title">Desline - Keep moving</h3>
+      <h5 class="drawer-box-head_desc"></h5>
+    </div>
+    
+    <div class="drawer-box-content">
+      <ul class="drawer-box-content_menu">
+        
+          
+            <li class="drawer-box-content_item" style="position: relative;">
+              
+                <a href="/" class="drawer-menu-item-link">
+                  
+                    <i class="fa fa-home" aria-hidden="true"></i>
+                  
+                  <span class="name">首页</span>
+                </a>
+              
+            </li>
+          
+            <li class="drawer-box-content_item" style="position: relative;">
+              
+                <a href="/archives" class="drawer-menu-item-link">
+                  
+                    <i class="fa fa-archive" aria-hidden="true"></i>
+                  
+                  <span class="name">归档</span>
+                </a>
+              
+            </li>
+          
+            <li class="drawer-box-content_item" style="position: relative;">
+              
+                <a href="/tags" class="drawer-menu-item-link">
+                  
+                    <i class="fa fa-tags" aria-hidden="true"></i>
+                  
+                  <span class="name">标签</span>
+                </a>
+              
+            </li>
+          
+            <li class="drawer-box-content_item" style="position: relative;">
+              
+                <a href="/categories" class="drawer-menu-item-link">
+                  
+                    <i class="fa fa-bookmark" aria-hidden="true"></i>
+                  
+                  <span class="name">分类</span>
+                </a>
+              
+            </li>
+          
+            <li class="drawer-box-content_item" style="position: relative;">
+              
+                <a href="javascript:;" class="drawer-menu-item-link has-children" @click="openOrCloseMenu(4)">
+                  <span>
+                    
+                      <i class="fa fa-link"></i>
+                    
+                    <span class="name">更多</span>
+                  </span>
+                  <i class="fa fa-chevron-left arrow " :class="{'icon-rotate': isOpen(4)}" aria-hidden="true"></i>
+                </a>
+                <ul class="drawer-sub-menu" v-if="isOpen(4)">
+                  
+                  <li>
+                    <a href="/about">
+                      
+                      <i class="fa fa-user" style="margin-top: -20px;"></i>
+                      
+                      <span>关于我</span>
+                    </a>
+                  </li>
+                  
+                </ul>
+              
+            </li>
+          
+        
+        
+      </ul>
+    </div>
+  </div>
+</div>
+
+<script>
+  var body = document.body || document.documentElement || window;
+  var vm = new Vue({
+    el: '#appDrawer',
+    data: {
+      visible: false,
+      top: 0,
+      openArr: [],
+    },
+    computed: {
+    },
+    mounted() {
+    },
+    methods: {
+      isOpen(index) {
+        if (this.openArr.includes(index)) {
+          return true;
+        } else {
+          return false;
+        }
+      },
+      openOrCloseMenu(curIndex) {
+        const index = this.openArr.indexOf(curIndex);
+        if (index !== -1) {
+          this.openArr.splice(index, 1);
+        } else {
+          this.openArr.push(curIndex);
+        }
+      },
+      showDialogDrawer() {
+        this.visible = true;
+        // 防止页面滚动，只能让弹框滚动
+        this.top = $(document).scrollTop()
+        body.style.cssText = 'width: 100%; height: 100%;overflow: hidden;';
+      },
+      cancelDialogDrawer() {
+        this.visible = false;
+        body.removeAttribute('style');
+        $(document).scrollTop(this.top)
+      }
+    },
+    created() {}
+  })
+</script>
+
+    </div>
+    <div class="blog-title" id="author-avatar">
+      
+        <div class="avatar">
+          <img src="/yousa.jpeg" alt="logo">
+        </div>
+      
+      <a href="/" class="logo">Desline - Keep moving</a>
+    </div>
+    <nav class="navbar">
+      <ul class="menu">
+        
+          
+            <li class="menu-item" style="position: relative;">
+              
+                <a href="/" class="menu-item-link" title="首页">
+                  
+                    <i class="fa fa-home" aria-hidden="true"></i>
+                  
+                  <span class="name">首页</span>
+                </a>
+              
+            </li>
+          
+            <li class="menu-item" style="position: relative;">
+              
+                <a href="/archives" class="menu-item-link" title="归档">
+                  
+                    <i class="fa fa-archive" aria-hidden="true"></i>
+                  
+                  <span class="name">归档</span>
+                </a>
+              
+            </li>
+          
+            <li class="menu-item" style="position: relative;">
+              
+                <a href="/tags" class="menu-item-link" title="标签">
+                  
+                    <i class="fa fa-tags" aria-hidden="true"></i>
+                  
+                  <span class="name">标签</span>
+                </a>
+              
+            </li>
+          
+            <li class="menu-item" style="position: relative;">
+              
+                <a href="/categories" class="menu-item-link" title="分类">
+                  
+                    <i class="fa fa-bookmark" aria-hidden="true"></i>
+                  
+                  <span class="name">分类</span>
+                </a>
+              
+            </li>
+          
+            <li class="menu-item" style="position: relative;">
+              
+                <a href="javascript:;" class="menu-item-link" title="更多">
+                  
+                    <i class="fa fa-link"></i>
+                  
+                  <span class="name">更多</span>
+                  <i class="fa fa-chevron-down arrow" aria-hidden="true"></i>
+                </a>
+                <ul class="sub-menu">
+                  
+                  <li>
+                    <a href="/about">
+                      
+                      <i class="fa fa-user" style="margin-top: -20px;"></i>
+                      
+                      <span>关于我</span>
+                    </a>
+                  </li>
+                  
+                </ul>
+              
+            </li>
+          
+        
+      </ul>
+      
+      
+        <div id="appSearch">
+  <div class="search"  @click="showDialog()"><i class="fa fa-search" aria-hidden="true"></i></div>
+  <transition name="fade">
+    <div class="message-box_wrapper" style="display: none;" v-cloak v-show="dialogVisible" @click.self="cancelDialogVisible()">
+      <div class="message-box animated bounceInDown">
+        <!-- <div class="close" style="overflow: hidden;">
+          <i class="fa fa-close" aria-hidden="true" style="float:right;" @click.self="cancelDialogVisible()"></i>
+        </div> -->
+        <h2>
+          <span>
+            <i class="fa fa-search" aria-hidden="true"></i>
+            <span class="title">本地搜索</span>
+          </span>
+          <i class="fa fa-close close" pointer style="float:right;" aria-hidden="true" @click.self="cancelDialogVisible()"></i>
+        </h2>
+        <form class="site-search-form">
+          <input type="text"
+            placeholder="请输入关键字"
+            id="local-search-input" 
+            @click="getSearchFile()"
+            class="st-search-input"
+            v-model="searchInput"
+          />
+        </form>
+        <div class="result-wrapper">
+          <div id="local-search-result" class="local-search-result-cls"></div>
+        </div>
+      </div>
+    </div>
+  </transition>
+</div>
+<script src="/js/local_search.js"></script>
+<script>
+  var body = document.body || document.documentElement || window;
+  var vm = new Vue({
+    el: '#appSearch',
+    data: {
+      dialogVisible: false,
+      searchInput: '',
+      top: 0,
+    },
+    computed: {
+    },
+    mounted() {
+    },
+    methods: {
+      showDialog() {
+        this.dialogVisible = true;
+        // 防止页面滚动，只能让弹框滚动
+        this.top = $(document).scrollTop()
+        body.style.cssText = 'overflow: hidden;';
+      },
+      getSearchFile() {
+        if (!this.searchInput) {
+          getSearchFile("/search.xml");
+        }
+      },
+      cancelDialogVisible() {
+        this.dialogVisible = false;
+        body.removeAttribute('style');
+        $(document).scrollTop(this.top)
+      },
+    },
+    created() {}
+  })
+</script>
+<!-- 解决刷新页面闪烁问题，可以在元素上添加display: none, 或者用vue.extend方法，详情：https://blog.csdn.net/qq_31393401/article/details/81017912 -->
+<!-- 下面是搜索基本写法 -->
+<!-- <script type="text/javascript" id="local.search.active">
+  var inputArea = document.querySelector("#local-search-input");
+  inputArea.onclick   = function(){ getSearchFile(); this.onclick = null }
+  inputArea.onkeydown = function(){ if(event.keyCode == 13) return false }
+</script> -->
+
+      
+
+    </nav>
+  </div>
+  
+  
+    <div id="he-plugin-simple"></div>
+    <script>
+      WIDGET = {
+        CONFIG: {
+          "modules": "012",
+          "background": 5,
+          "tmpColor": "4A4A4A",
+          "tmpSize": 16,
+          "cityColor": "4A4A4A",
+          "citySize": 16,
+          "aqiSize": 16,
+          "weatherIconSize": 24,
+          "alertIconSize": 18,
+          "padding": "10px 10px 10px 10px",
+          "shadow": "1",
+          "language": "auto",
+          "borderRadius": 5,
+          "fixed": "false",
+          "vertical": "middle",
+          "horizontal": "center",
+          "key": "2784dd3fcb1e4f0f9a9b579bf69641f2"
+        }
+      }
+    </script>
+    <script src="https://widget.qweather.net/simple/static/js/he-simple-common.js?v=2.0"></script> 
+    
+
+    <!-- 当头部导航设置为背景透明的时候  -->
+    
+      <script src="/js/header/index.js" data-pjax></script>
+    
+</header>
+
+    <!-- 需要在上面加载的js -->
+    <script>
+    function loadScript(src, cb) {
+        setTimeout(function () {
+            var HEAD = document.getElementsByTagName('head')[0] || document.documentElement;
+            var script = document.createElement('script');
+            script.setAttribute('type', 'text/javascript');
+            if (cb) script.onload = cb;
+            script.setAttribute('src', src);
+            HEAD.appendChild(script);
+        });
+    }
+
+    //https://github.com/filamentgroup/loadCSS
+    var loadCSS = function (href, before, media, attributes) {
+        var doc = window.document;
+        var ss = doc.createElement("link");
+        var ref;
+        if (before) {
+            ref = before;
+        }
+        else {
+            var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+            ref = refs[refs.length - 1];
+        }
+        var sheets = doc.styleSheets;
+        if (attributes) {
+            for (var attributeName in attributes) {
+                if (attributes.hasOwnProperty(attributeName)) {
+                    ss.setAttribute(attributeName, attributes[attributeName]);
+                }
+            }
+        }
+        ss.rel = "stylesheet";
+        ss.href = href;
+        ss.media = "only x";
+        function ready(cb) {
+            if (doc.body) {
+                return cb();
+            }
+            setTimeout(function () {
+                ready(cb);
+            });
+        }
+        ready(function () {
+            ref.parentNode.insertBefore(ss, (before ? ref : ref.nextSibling));
+        });
+        var onloadcssdefined = function (cb) {
+            var resolvedHref = ss.href;
+            var i = sheets.length;
+            while (i--) {
+                if (sheets[i].href === resolvedHref) {
+                    return cb();
+                }
+            }
+            setTimeout(function () {
+                onloadcssdefined(cb);
+            });
+        };
+        function loadCB() {
+            if (ss.addEventListener) {
+                ss.removeEventListener("load", loadCB);
+            }
+            ss.media = media || "all";
+        }
+        if (ss.addEventListener) {
+            ss.addEventListener("load", loadCB);
+        }
+        ss.onloadcssdefined = onloadcssdefined;
+        onloadcssdefined(loadCB);
+        return ss;
+    };
+    
+</script>
+ 
+
+<!-- 轮播图所需要的js -->
+<script src="/js/swiper/swiper.min.js"></script>
+<script src="/js/swiper/vue-awesome-swiper.js"></script>
+<script src="/js/swiper/swiper.animate1.0.3.min.js"></script>
+
+
+  <script src="/js/vue-typed-js/index.js"></script>
+
+
+<!-- 首页的公告滚动插件的js需要重新加载 -->
+<script src="/js/vue-seamless-scroll/index.js"></script>
+
+<!-- 打字机效果js -->
+<script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11"></script>
+
+
+    <!-- 内容区域 -->
+    <main class="main" id="pjax-container" style="margin-top: 0;">
+      
+ <!-- prismjs 代码高亮 -->
+ 
+    
+    <link href="/js/prism/prism-line-numbers.css" rel="stylesheet">
+    
+        <link href="/js/prism/prism.min.css" rel="stylesheet">
+    
+
+    <style>
+        pre[class*="language-"] {
+            overflow-y: hidden;
+        }
+        .line-numbers .line-numbers-rows {
+            border: none;
+        }
+    </style>
+  
+
+
+<div class="bg-dark-floor" style="position: fixed;left: 0;top: 0;width: 100%;height: 100%;z-index: -1;"></div>
+
+<!-- 文章详情页顶部图片和标题 -->
+
+
+
+
+<div class="post-detail-header lazyload" id="thumbnail_canvas" data-original="/medias/7.jpg" style="background-repeat: no-repeat; background-size: cover; 
+  background-position: center center;position: relative;">
+  <div class="post-detail-header-mask"></div>
+  <canvas id="header_canvas"style="position:absolute;bottom:0;pointer-events:none;"></canvas>
+  
+  <div class="post-detail-header_info-box">
+    <div class="title-box">
+      <span class="title">
+        Django学习笔记（一）
+      </span>
+    </div>
+    
+    
+      
+        <span class="post-detail-header_date">
+          <i class="fa fa-calendar"></i> 发表于：2022-01-26 |
+        </span>
+      
+
+      
+
+      
+        <div class="post-detail-header_wordcount">
+          <span class="totalcount">
+            <i class="fa fa-file-text-o"></i> 字数统计: 4.6k |
+          </span>
+  
+          <span class="min2read">
+            <i class="fa fa-clock-o"></i> 阅读时长: 18分钟 |
+          </span>
+  
+          
+            <span class="reading">
+              <i class="fa fa-eye"></i> 阅读量：<span id="busuanzi_value_page_pv"></span>
+            </span>
+          
+        </div>
+      
+    
+  </div>
+  
+  
+    <script src="/js/bubble/bubble.js"></script>
+  
+</div>
+
+
+
+<div class="row justify-position">
+  <div class="main-content">
+    <article class="post post-detail">
+      
+      <div class="post-content">
+        <h1 id="Django学习笔记（一）"><a href="#Django学习笔记（一）" class="headerlink" title="Django学习笔记（一）"></a><center>Django学习笔记（一）</center></h1><h2 id="序章"><a href="#序章" class="headerlink" title="序章"></a>序章</h2><p>Django框架的模型结构：MVC结构，分别是模型（Models），视图（Views），控制器（Controller）</p>
+<p>MVC 以一种插件式的、松耦合的方式连接在一起。</p>
+<ul>
+<li>模型（M）- 编写程序应有的功能，负责业务对象与数据库的映射(ORM)。</li>
+<li>视图（V）- 图形界面，负责与用户的交互(页面)。</li>
+<li>控制器（C）- 负责转发请求，对请求进行处理。</li>
+</ul>
+<p>在Django中，采用MVC的一种变体MTV，即模型（Models），模板（Templates），视图（Views）</p>
+<ul>
+<li>M 表示模型（Model）：编写程序应有的功能，负责业务对象与数据库的映射(ORM)。</li>
+<li>T 表示模板 (Template)：负责如何把页面(html)展示给用户。</li>
+<li>V 表示视图（View）：负责业务逻辑，并在适当时候调用 Model和 Template。</li>
+</ul>
+<p>除了以上三层之外，还需要一个 URL 分发器，它的作用是将一个个 URL 的页面请求分发给不同的 View 处理，View 再调用相应的 Model 和 Template</p>
+<p>（以上部分参考自菜鸟教程：<a target="_blank" rel="noopener" href="https://www.runoob.com/django/django-intro.html">Django 简介 | 菜鸟教程 (runoob.com)</a>)</p>
+<h2 id="一、创建一个项目"><a href="#一、创建一个项目" class="headerlink" title="一、创建一个项目"></a>一、创建一个项目</h2><ol>
+<li><p>在python中安装django库：<code>pip install django</code></p>
+<p>默认安装的是最新的发行版，现已更新至4.0+，和网络中的2.0+相比，3.0时增添了asgi作为wsgi的异步处理版本，支持asyncio等异步的库</p>
+</li>
+<li><p>创建项目文件：在控制台中输入<code>django-admin startproject &lt;项目名&gt;</code></p>
+<p>则创建对应项目，并且项目结构如下（假定项目名称为<code>mysite</code>)：</p>
+<pre class="line-numbers language-none"><code class="language-none">mysite:  # 项目文件夹
+    - mysite:  # 配置文件夹
+          - __init__.py  # 初始化文件，告诉 Python 该目录是一个 Python 包
+          - asgi.py  # 异步服务器网关接口
+          - sttings.py  #  配置文件
+          - urls.py  # 路由文件，一份由 Django 驱动的网站&quot;目录&quot;
+          - wsgi.py  # 同步服务器网关接口
+    - manage.py  # 一个实用的命令行工具，可让你以各种方式与该 Django 项目进行交互<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+<li><p>运行项目：切换到<code>manage.py</code>文件对应的文件夹目录后，运行<code>python manage.py runserver</code>，此时服务被默认部署在<code>127.0.0.1:8000</code>，如需更改，则在前面的命令末尾加上运行的地址（ip和端口）</p>
+<p>此时会发现，运行报错：<code>DJANGO.CORE.EXCEPTIONS.IMPROPERLYCONFIGURED: SQLITE 3.9.0 OR LATER IS REQUIRED (FOUND 3.x.x). </code>，这说明默认的sqlite数据库的版本不支持当前的django框架版本，此时要想成功运行有以下三个选择：</p>
+<ul>
+<li>降低django版本，即在安装django的时候指定版本号</li>
+<li>升级sqlite（win系统中较为复杂）</li>
+<li>更换默认数据库</li>
+</ul>
+<p>这里采用是第三种方法，更换默认数据库为mysql，需要安装python控制mysql的库并在配置文件中进行更改：</p>
+<ul>
+<li><p>python 3.x中控制mysql的库为<code>pymysql</code>，安装这个库</p>
+</li>
+<li><p>更改如下配置文件：</p>
+<ul>
+<li><p>在<code>__init__.py中</code>加入：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> pymysql
+pymysql<span class="token punctuation">.</span>install_as_MySQLdb<span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>因为在python2.x中，控制mysql的库是mysqldb，但是3.x中不再使用这个库了，需要适配</p>
+</li>
+<li><p>在<code>settings.py</code>中，更改DATABASES项为：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token string">'default'</span><span class="token punctuation">:</span> <span class="token punctuation">&#123;</span>
+    <span class="token string">'ENGINE'</span><span class="token punctuation">:</span> <span class="token string">'django.db.backends.mysql'</span><span class="token punctuation">,</span>   <span class="token comment"># 固定配置</span>
+    <span class="token string">'HOST'</span><span class="token punctuation">:</span> <span class="token string">'127.0.0.1'</span><span class="token punctuation">,</span>  <span class="token comment"># mysql地址</span>
+    <span class="token string">'PORT'</span><span class="token punctuation">:</span> <span class="token string">'3306'</span><span class="token punctuation">,</span>  <span class="token comment"># 端口号</span>
+    <span class="token string">'NAME'</span><span class="token punctuation">:</span> <span class="token string">'django'</span><span class="token punctuation">,</span>  <span class="token comment"># 库名（组名）</span>
+    <span class="token string">'USER'</span><span class="token punctuation">:</span> <span class="token string">'root'</span><span class="token punctuation">,</span>  <span class="token comment"># 你的用户名，一般默认是root</span>
+    <span class="token string">'PASSWORD'</span><span class="token punctuation">:</span> <span class="token string">'123456'</span><span class="token punctuation">,</span>  <span class="token comment"># 你root账户的密码</span>
+    <span class="token string">'OPTIONS'</span><span class="token punctuation">:</span> <span class="token punctuation">&#123;</span><span class="token string">'init_command'</span><span class="token punctuation">:</span> <span class="token string">"SET sql_mode='STRICT_TRANS_TABLES'"</span><span class="token punctuation">,</span> <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+    <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>原来的默认配置是：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token string">'default'</span><span class="token punctuation">:</span> <span class="token punctuation">&#123;</span>
+    <span class="token string">'ENGINE'</span><span class="token punctuation">:</span> <span class="token string">'django.db.backends.sqlite3'</span><span class="token punctuation">,</span>
+    <span class="token string">'NAME'</span><span class="token punctuation">:</span> BASE_DIR <span class="token operator">/</span> <span class="token string">'db.sqlite3'</span><span class="token punctuation">,</span>
+     <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>可以注释掉</p>
+</li>
+</ul>
+</li>
+<li><p>执行以下命令进行数据迁移：</p>
+<ul>
+<li><code>python manage.py makemigrations </code> </li>
+<li><code>python manage.py migrate</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>重新运行项目，在浏览器输入对应部署网址后看到初始界面表示项目创建成功：</p>
+<p><img "" class="lazyload placeholder" data-original="django_img%5Csuccess_page.png" src="https://img10.360buyimg.com/ddimg/jfs/t1/157667/29/9156/134350/603c6445Ebbc9cabe/41219c5d36d45072.gif" alt="success_page"></p>
+</li>
+</ol>
+<h2 id="二、路由管理初步-amp-请求响应——HelloWorld"><a href="#二、路由管理初步-amp-请求响应——HelloWorld" class="headerlink" title="二、路由管理初步&amp;请求响应——HelloWorld"></a>二、路由管理初步&amp;请求响应——HelloWorld</h2><p>在项目中输出一个“HelloWorld”，需要通过配置相应的路由和对应的方法来完成</p>
+<ol>
+<li><p>在项目配置文件的目录中创建一个新文件<code>views.py</code>（固定名称），并进行如下配置：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> django<span class="token punctuation">.</span>http <span class="token keyword">import</span> HttpResponse
+ 
+<span class="token keyword">def</span> <span class="token function">hello</span><span class="token punctuation">(</span>request<span class="token punctuation">)</span><span class="token punctuation">:</span>  <span class="token comment"># 接受一个请求</span>
+    <span class="token keyword">return</span> HttpResponse<span class="token punctuation">(</span><span class="token string">"Hello world ! "</span><span class="token punctuation">)</span>  <span class="token comment"># 返回一个响应</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></li>
+<li><p>在<code>urls.py</code>文件中进行配置，导入刚才创建的views文件并对urlpatterns列表进行添加：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> <span class="token punctuation">.</span> <span class="token keyword">import</span> views  <span class="token comment"># 添加这条导入信息</span>
+
+<span class="token triple-quoted-string string">'''
+这是原来的urlpatterns
+urlpatterns = [
+    path('admin/', admin.site.urls),
+]
+'''</span>
+<span class="token comment"># 新的urlpatterns</span>
+urlpatterns <span class="token operator">=</span> <span class="token punctuation">[</span>
+    path<span class="token punctuation">(</span><span class="token string">'admin/'</span><span class="token punctuation">,</span> admin<span class="token punctuation">.</span>site<span class="token punctuation">.</span>urls<span class="token punctuation">)</span><span class="token punctuation">,</span>
+    path<span class="token punctuation">(</span><span class="token string">'hello/'</span><span class="token punctuation">,</span> views<span class="token punctuation">.</span>hello<span class="token punctuation">)</span><span class="token punctuation">,</span>
+<span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<p>此时开启服务器，并在浏览器网址栏输入<code>127.0.0.1:8000/hello/</code>，可以看到如下结果：</p>
+<p><img "" class="lazyload placeholder" data-original="django_img%5Chello_page.png" src="https://img10.360buyimg.com/ddimg/jfs/t1/157667/29/9156/134350/603c6445Ebbc9cabe/41219c5d36d45072.gif" alt="hello_page.png"></p>
+</li>
+<li><p>关于路由配置：</p>
+<ul>
+<li><code>path(route, view, kwargs=None, name=None)</code>方法：四个参数<ul>
+<li>route: 字符串，表示 URL 规则，与之匹配的 URL 会执行对应的第二个参数 view。</li>
+<li>view: 用于执行与正则表达式匹配的 URL 请求。</li>
+<li>kwargs: 视图使用的字典类型的参数。</li>
+<li>name: 用来反向获取 URL。</li>
+</ul>
+</li>
+<li><code>re_path(route, view, kwargs=None, name=None)</code>方法，四个参数同上，用来匹配使用正则表达式的URL</li>
+</ul>
+</li>
+</ol>
+<h2 id="三、后台管理初步"><a href="#三、后台管理初步" class="headerlink" title="三、后台管理初步"></a>三、后台管理初步</h2><ol>
+<li><p>通过<code>manage.py</code>创建超级管理员用户：<code>python manage.py createsuperuser</code></p>
+<p>然后依次输入用户名和密码即可，中间的邮箱可以略过</p>
+<p><img "" class="lazyload placeholder" data-original="django_img%5Ccreate_superuser.png" src="https://img10.360buyimg.com/ddimg/jfs/t1/157667/29/9156/134350/603c6445Ebbc9cabe/41219c5d36d45072.gif" alt="create_superuser"></p>
+<p>这里选择用户名为<code>admin</code>，同时设定了密码也是admin，系统提示密码和用户名过于相似而且太短（少于8位），而且密码太简单，但是下面选择<code>y</code>表示仍然这样设置，则超级用户设置成功。</p>
+</li>
+<li><p>运行服务，在浏览器输入<code>127.0.0.1:8000/admin/</code>即可打开后台管理的登录页面：</p>
+<p><img "" class="lazyload placeholder" data-original="django_img%5Cbackend_login.png" src="https://img10.360buyimg.com/ddimg/jfs/t1/157667/29/9156/134350/603c6445Ebbc9cabe/41219c5d36d45072.gif" alt="backend_login"></p>
+<p>输入用户名和密码，进入后台：</p>
+<p><img "" class="lazyload placeholder" data-original="django_img%5Cbackend.png" src="https://img10.360buyimg.com/ddimg/jfs/t1/157667/29/9156/134350/603c6445Ebbc9cabe/41219c5d36d45072.gif" alt="backend"></p>
+<p>发现这里有一个用户，就是刚才创建的<code>admin</code></p>
+</li>
+</ol>
+<h2 id="四、创建应用（APP）"><a href="#四、创建应用（APP）" class="headerlink" title="四、创建应用（APP）"></a>四、创建应用（APP）</h2><p>APP是Django框架中功能模块实现的部分，我们根据需要的功能来创建和设置不同的APP来进行使用。APP中有模型（Models）和视图（Views），是需要我们重点关注的部分。</p>
+<h3 id="1-通过manage-py创建APP：python-manage-py-startapp-lt-名称-gt"><a href="#1-通过manage-py创建APP：python-manage-py-startapp-lt-名称-gt" class="headerlink" title="1. 通过manage.py创建APP：python manage.py startapp &lt;名称&gt;"></a>1. 通过<code>manage.py</code>创建APP：<code>python manage.py startapp &lt;名称&gt;</code></h3><p>这里创建了一个名为<code>article</code>的APP用来发布文章</p>
+<p>此时，在我们的项目文件夹中出现了新的文件夹，就是刚创建的app的文件夹，因此整个项目的文件树变成了以下情况：</p>
+<pre class="line-numbers language-none"><code class="language-none">mysite:  # 项目文件夹
+    - mysite:  # 配置文件夹
+          - __init__.py  # 初始化文件，告诉 Python 该目录是一个 Python 包
+          - asgi.py  # 异步服务器网关接口
+          - sttings.py  #  配置文件
+          - urls.py  # 路由文件，一份由 Django 驱动的网站&quot;目录&quot;
+          - views.py  # 在步骤二中创建的文件，表示视图，即用户看到的界面，也是URL对应的方法
+          - wsgi.py  # 同步服务器网关接口
+    - article:  # 刚刚创建的APP的文件夹
+    	-  __init__.py
+    	- admin.py  # APP的后台管理文件，如需通过后台向数据库中添加数据，可以进行操作
+        - apps.py  # APP的启动类
+        - migrations  # 数据库表、字段等变更的记录
+        - models.py  # 持久层，对数据库进行操作
+        - tests.py  # 单元测试
+        - views.py  # 视图，与配置文件夹中的作用一样
+    - manage.py  # 一个实用的命令行工具，可让你以各种方式与该 Django 项目进行交互<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="2-在全局设置中注册APP："><a href="#2-在全局设置中注册APP：" class="headerlink" title="2. 在全局设置中注册APP："></a>2. 在全局设置中注册APP：</h3><p>找到配置文件夹，修改其中的<code>settings.py</code>中<code>INSTALLED_APPS</code>字段，并在列表中添加上我们创建的APP。这里可以打开<code>article</code>文件夹下的<code>apps.py</code>文件，看到里面有一个类叫做<code>ArticleConfig</code>，里面保存了我们这个APP的配置，因此，我们在<code>INSTALLED_APPS</code>列表中添加<code>&#39;article.apps.ArticleConfig&#39;,</code>就可以了（逗号也要添加进去）。</p>
+<h3 id="3-创建一个简单的文章模型，并通过后台添加数据："><a href="#3-创建一个简单的文章模型，并通过后台添加数据：" class="headerlink" title="3. 创建一个简单的文章模型，并通过后台添加数据："></a>3. 创建一个简单的文章模型，并通过后台添加数据：</h3><ol>
+<li><p>首先在article的<code>models.py</code>中写入以下内容并保存：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">class</span> <span class="token class-name">Article</span><span class="token punctuation">(</span>models<span class="token punctuation">.</span>Model<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    title <span class="token operator">=</span> models<span class="token punctuation">.</span>CharField<span class="token punctuation">(</span>max_length<span class="token operator">=</span><span class="token number">30</span><span class="token punctuation">)</span>  <span class="token comment"># 设置一个属性为标题，对应数据库中的字符型，最大长度为30</span>
+    content <span class="token operator">=</span> models<span class="token punctuation">.</span>TextField<span class="token punctuation">(</span><span class="token punctuation">)</span>  <span class="token comment"># 设置内容属性，对应数据库中的文本型</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></li>
+<li><p>进行数据库更新：</p>
+<ul>
+<li><code>python manage.py makemigrations </code> </li>
+<li><code>python manage.py migrate</code></li>
+</ul>
+</li>
+<li><p>进行后台注册：</p>
+<p>在article的<code>admin.py</code>中添加以下内容：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment"># 前面有文件自带的一些import信息，不用修改，直接添加以下内容即可</span>
+<span class="token keyword">from</span> <span class="token punctuation">.</span>models <span class="token keyword">import</span> Article
+
+admin<span class="token punctuation">.</span>site<span class="token punctuation">.</span>register<span class="token punctuation">(</span>Article<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></li>
+<li><p>打开后台，发现已经有了Article：</p>
+<p><img "" class="lazyload placeholder" data-original="django_img%5Cbackend_article.png" src="https://img10.360buyimg.com/ddimg/jfs/t1/157667/29/9156/134350/603c6445Ebbc9cabe/41219c5d36d45072.gif"></p>
+<p>添加3个数据：</p>
+<p><img "" class="lazyload placeholder" data-original="django_img%5Cadd_articles.png" src="https://img10.360buyimg.com/ddimg/jfs/t1/157667/29/9156/134350/603c6445Ebbc9cabe/41219c5d36d45072.gif"></p>
+</li>
+</ol>
+<h3 id="4-（可选）将后台改为中文界面："><a href="#4-（可选）将后台改为中文界面：" class="headerlink" title="4. （可选）将后台改为中文界面："></a>4. （可选）将后台改为中文界面：</h3><p>将配置文件夹的<code>settings.py</code>中的<code>LANGUAGE_CODE</code>改为<code>zh-hans</code></p>
+<p><img "" class="lazyload placeholder" data-original="django_img%5Cchinese_backend.png" src="https://img10.360buyimg.com/ddimg/jfs/t1/157667/29/9156/134350/603c6445Ebbc9cabe/41219c5d36d45072.gif"></p>
+<h2 id="五、模板的创建和使用"><a href="#五、模板的创建和使用" class="headerlink" title="五、模板的创建和使用"></a>五、模板的创建和使用</h2><p>模板（Template）是为了方便同质化网页的部署而使用的，比如一般的个人博客，其每篇文章的页面都可能用的是一个html模板，只是标题和显示的内容不同，这里的html文件就是模板。我们在Django中可以自己制作或放置模板，来进行网页的批量处理。</p>
+<h3 id="1-模板文件夹的位置和创建模板："><a href="#1-模板文件夹的位置和创建模板：" class="headerlink" title="1. 模板文件夹的位置和创建模板："></a>1. 模板文件夹的位置和创建模板：</h3><p>我们首先可以查看配置文件夹中的<code>setings.py</code>文件，找到<code>TEMPLATES</code>，默认情况下，其中<code>DIRS</code>为空列表，而<code>APP_DIRS</code>为<code>True</code>表示在寻找模板文件时，会去APP文件夹内的模板文件夹找。</p>
+<p>当<code>DIRS</code>为空时，项目文件夹中即使有<code>templates</code>文件夹，也不会优先去这里找模板文件，会按照<code>settings.py</code>中的注册顺序，从每个APP的<code>templates</code>文件夹找，只要找到对应名称的文件就会返回。</p>
+<p>此时，我们可以先在article文件夹下创建<code>templates</code>，并创建一个模板<code>article_detail.html</code></p>
+<p>内容如下：</p>
+<pre class="line-numbers language-html" data-language="html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>html</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>head</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>head</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>body</span><span class="token punctuation">></span></span>
+        <span class="token comment">&lt;!-- 这里用双大括号标出变量，因为传来的article_obj是一个对象，
+        有title和content两个属性，可以直接调用 --></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h2</span><span class="token punctuation">></span></span>&#123;&#123;article_obj.title&#125;&#125;<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h2</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">></span></span>&#123;&#123;article_obj.content&#125;&#125;<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>body</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>html</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="2-视图配置和路由管理"><a href="#2-视图配置和路由管理" class="headerlink" title="2. 视图配置和路由管理"></a>2. 视图配置和路由管理</h3><ol>
+<li><p>视图配置：</p>
+<p>在article文件夹的<code>views.py</code>中添加一个方法和对应的依赖：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> django<span class="token punctuation">.</span>shortcuts <span class="token keyword">import</span> get_object_or_404  <span class="token comment"># 这个函数如果能查到就获取，差不到就抛出404异常</span>
+<span class="token keyword">from</span> <span class="token punctuation">.</span>models <span class="token keyword">import</span> Article
+
+<span class="token keyword">def</span> <span class="token function">article_detail</span><span class="token punctuation">(</span>request<span class="token punctuation">,</span> article_id<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    article <span class="token operator">=</span> get_object_or_404<span class="token punctuation">(</span>Article<span class="token punctuation">,</span> <span class="token builtin">id</span><span class="token operator">=</span>article_id<span class="token punctuation">)</span>  <span class="token comment"># 传入模型，数据库按传入的id进行查找</span>
+    content <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>  <span class="token comment"># 一个内容字典，字典的键对应的就是html模板中的变量名</span>
+    content<span class="token punctuation">[</span><span class="token string">"article_obj"</span><span class="token punctuation">]</span> <span class="token operator">=</span> article
+    <span class="token keyword">return</span> render<span class="token punctuation">(</span>request<span class="token punctuation">,</span> <span class="token string">'article_detail.html'</span><span class="token punctuation">,</span> content<span class="token punctuation">)</span>  <span class="token comment"># 传入request，模板，内容字典</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+<li><p>路由管理：</p>
+<p>在配置文件夹的<code>urls.py</code>中添加一条路由解析记录：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> article<span class="token punctuation">.</span>views <span class="token keyword">import</span> article_detail 
+
+path<span class="token punctuation">(</span><span class="token string">'article/&lt;int:article_id>'</span><span class="token punctuation">,</span> article_detail<span class="token punctuation">,</span> name<span class="token operator">=</span><span class="token string">'article_detail'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>  
+<span class="token comment"># 路由是article/int的部分全都用一个方法处理</span>
+<span class="token comment"># article_id就是url中出现的数字</span>
+<span class="token comment"># name用来标记这个路由，是它的别名</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+<li><p>运行服务：</p>
+<p><img "" class="lazyload placeholder" data-original="django_img%5Carticle_page.png" src="https://img10.360buyimg.com/ddimg/jfs/t1/157667/29/9156/134350/603c6445Ebbc9cabe/41219c5d36d45072.gif"></p>
+<p>如果没有这个数据：</p>
+<p><img "" class="lazyload placeholder" data-original="django_img%5Carticle_notfound.png" src="https://img10.360buyimg.com/ddimg/jfs/t1/157667/29/9156/134350/603c6445Ebbc9cabe/41219c5d36d45072.gif"></p>
+</li>
+</ol>
+<h3 id="3-通过模板获取文章列表"><a href="#3-通过模板获取文章列表" class="headerlink" title="3. 通过模板获取文章列表"></a>3. 通过模板获取文章列表</h3><ol>
+<li><p>在APP文件夹的<code>templates</code>目录下创建一个新的模板文件<code>article_list.html</code>：</p>
+<pre class="line-numbers language-html" data-language="html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>html</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>head</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>head</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>body</span><span class="token punctuation">></span></span>
+        &#123;% for article in articles %&#125;
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>li</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>a</span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>&#123;% url <span class="token punctuation">'</span>article_detail<span class="token punctuation">'</span> article.id %&#125;<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>&#123;&#123; article.title &#125;&#125;<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>a</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>li</span><span class="token punctuation">></span></span>
+        &#123;% endfor %&#125;
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>body</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>html</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li><p>其中，<code>&#123;% for %&#125;&#123;% endfor %&#125;</code>是Django的模板标签，可以将一个QuerySet遍历出来，如果这里不用for标签，直接，就会在页面上显示一个QuerySet的对象，而不是需要的列表。</p>
+</li>
+<li><p>而<code>&#123;% url %&#125;</code>也是Django的模板标签，负责查找路由配置</p>
+<p><code>&#123;% url <name> [<para1> , <para2>, ...]&#125;`
+
+     这表明了`&#123;% url %&#125;</code>标签的第一个参数就是路由配置中path（或re_path）函数中的name参数对应的值，从而将链接指定为这个路由；剩下的参数则是可选的，根据路由中的参数，按顺序填写。上文代码块中的<code>article.id</code>对应的就是其路由配置中<code>article/&lt;int:article_id&gt;</code>的<code>article_id</code></p>
+</li>
+<li><p><code>&lt;li&gt;</code>标签和<code>&lt;a&gt;</code>标签都是html的基本标签</p>
+</li>
+</ul>
+</li>
+<li><p>在APP文件夹下的<code>views.py</code>中添加一个新的方法如下：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">article_list</span><span class="token punctuation">(</span>request<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    articles <span class="token operator">=</span> Article<span class="token punctuation">.</span>objects<span class="token punctuation">.</span><span class="token builtin">all</span><span class="token punctuation">(</span><span class="token punctuation">)</span>  <span class="token comment"># 获取所有Article对象</span>
+    content <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+    content<span class="token punctuation">[</span><span class="token string">"articles"</span><span class="token punctuation">]</span> <span class="token operator">=</span> articles
+    <span class="token keyword">return</span> render<span class="token punctuation">(</span>request<span class="token punctuation">,</span> <span class="token string">'article_list.html'</span><span class="token punctuation">,</span> content<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>由此，html模板文件中的变量就是<code>articles</code>，这是查到的Article对象的查询集合（QuerySet）</p>
+</li>
+<li><p>在配置文件夹的<code>urls.py</code>中配置路由如下：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> article<span class="token punctuation">.</span>views <span class="token keyword">import</span> article_list
+
+path<span class="token punctuation">(</span><span class="token string">'article/'</span><span class="token punctuation">,</span> article_list<span class="token punctuation">,</span> name<span class="token operator">=</span><span class="token string">'article_list'</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></li>
+<li><p>运行服务，打开<code>127.0.0.1:8000/article/</code>：</p>
+<p><img "" class="lazyload placeholder" data-original="django_img%5Carticle_list.png" src="https://img10.360buyimg.com/ddimg/jfs/t1/157667/29/9156/134350/603c6445Ebbc9cabe/41219c5d36d45072.gif"></p>
+<p>证明配置成功了</p>
+</li>
+<li><p>再看<code>&#123;% url %&#125;</code>标签：</p>
+<p>由此我们就可以发现，url标签的使用正是通过如上3步进行配置的，每一步都互相影响。</p>
+<p>此外，这里选择使用看起来很复杂的<code>&#123;% url %&#125;</code>标签，而不是直接配置成<code>&lt;a href=&quot;article/&#123;&#123; article,id &#125;&#125;&quot;&gt;&lt;/a&gt;</code>，是因为如果不用url标签，一旦路由配置中的对应项路由进行了修改，所有使用这个路由的地方都需要重新改变；而使用url标签就可以大大简化这个过程，进一步解耦合。</p>
+</li>
+</ol>
+<h2 id="六、路由管理进阶——通过总路由管理每个APP的路由"><a href="#六、路由管理进阶——通过总路由管理每个APP的路由" class="headerlink" title="六、路由管理进阶——通过总路由管理每个APP的路由"></a>六、路由管理进阶——通过总路由管理每个APP的路由</h2><p>创建APP的路由文件：</p>
+<p>在article文件夹下创建<code>urls.py</code>，并将总路由配置文件（配置文件夹下的<code>urls.py</code>）中与article有关的部分剪切到APP的路由配置文件中，得到<strong>APP的路由配置</strong>如下：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> django<span class="token punctuation">.</span>urls <span class="token keyword">import</span> path
+<span class="token keyword">from</span> <span class="token punctuation">.</span> <span class="token keyword">import</span> views  <span class="token comment"># 这里是article的views</span>
+
+urlpatterns <span class="token operator">=</span> <span class="token punctuation">[</span>
+    <span class="token comment"># 此时这里的路由地址已经是"127.0.0.1:8000/article"了</span>
+    path<span class="token punctuation">(</span><span class="token string">''</span><span class="token punctuation">,</span> views<span class="token punctuation">.</span>article_list<span class="token punctuation">,</span> name<span class="token operator">=</span><span class="token string">'article_list'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    path<span class="token punctuation">(</span><span class="token string">'&lt;int:article_id>'</span><span class="token punctuation">,</span> views<span class="token punctuation">.</span>article_detail<span class="token punctuation">,</span> name<span class="token operator">=</span><span class="token string">'article_detail'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+<span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>同时，将<strong>总路由配置文件</strong>改为：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> django<span class="token punctuation">.</span>contrib <span class="token keyword">import</span> admin
+<span class="token keyword">from</span> django<span class="token punctuation">.</span>urls <span class="token keyword">import</span> path<span class="token punctuation">,</span> include  <span class="token comment"># include是为了管理APP中的路由，引入的函数</span>
+<span class="token keyword">from</span> <span class="token punctuation">.</span> <span class="token keyword">import</span> views  <span class="token comment"># 配置文件夹下的views</span>
+
+urlpatterns <span class="token operator">=</span> <span class="token punctuation">[</span>
+    path<span class="token punctuation">(</span><span class="token string">'admin/'</span><span class="token punctuation">,</span> admin<span class="token punctuation">.</span>site<span class="token punctuation">.</span>urls<span class="token punctuation">)</span><span class="token punctuation">,</span>
+    path<span class="token punctuation">(</span><span class="token string">'hello/'</span><span class="token punctuation">,</span> views<span class="token punctuation">.</span>hello<span class="token punctuation">)</span><span class="token punctuation">,</span>
+    path<span class="token punctuation">(</span><span class="token string">'article/'</span><span class="token punctuation">,</span> include<span class="token punctuation">(</span><span class="token string">'article.urls'</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span>  <span class="token comment"># 表示只要路由是article/xxx的部分全都由article的urls进行处理</span>
+<span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="七、静态资源"><a href="#七、静态资源" class="headerlink" title="七、静态资源"></a>七、静态资源</h2><p>在开发过程中，一般将：</p>
+<ul>
+<li>图片</li>
+<li>CSS</li>
+<li>js</li>
+<li>插件</li>
+</ul>
+<p>当做静态文件处理。</p>
+<p>静态文件的文件夹默认名称是<code>static</code>，<code>static</code>的标准目录格式是：</p>
+<pre class="line-numbers language-none"><code class="language-none">- static
+	- img
+	- CSS
+	- js
+	- plugins<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>一般会将<code>static</code>放在对应的APP文件夹下，在html模板中引用对应位置的资源是，需要使用<code>&#123;% static %&#125;</code>标签引用：</p>
+<pre class="line-numbers language-html" data-language="html"><code class="language-html">&#123;% load static %&#125;  <span class="token comment">&lt;!-- 如果下面用&#123;% static %&#125;标签，则在模板开头需要使用这个标签加载资源 --></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>img</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>&#123;% static <span class="token punctuation">'</span>img/1.png<span class="token punctuation">'</span> %&#125;<span class="token punctuation">"</span></span> <span class="token attr-name">alt</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span><span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>静态文件的设置在配置文件夹下的<code>settings.py</code>文件中有对应的配置。</p>
+<h2 id="八、请求和相应"><a href="#八、请求和相应" class="headerlink" title="八、请求和相应"></a>八、请求和相应</h2><p>这一部分主要是处理用户发来的请求并向用户返回响应的过程。</p>
+<h3 id="请求"><a href="#请求" class="headerlink" title="请求"></a>请求</h3><ul>
+<li><p>请求的方式：GET/POST</p>
+<p>在视图中获取请求：每个视图的函数的参数都是request，其中就包含了用户提交的所有请求信息。通过<code>reuqest.method</code>我们可以获取到用户请求的方式。</p>
+</li>
+<li><p>GET请求：直接在URL上传递参数</p>
+<p>在URL的末尾增加”?n1=xxx&amp;n2=xx”，通过<code>request.GET</code>就可以获取到传递参数的字典</p>
+</li>
+<li><p>POST请求会发送一个请求体，通过<code>request.POST</code>获得请求体的数据</p>
+</li>
+</ul>
+<h3 id="响应"><a href="#响应" class="headerlink" title="响应"></a>响应</h3><ul>
+<li>简单的响应——直接返回字符串<code>HTttpResponse(str)</code>，如果这里的字符串符合html格式，也会被自动变成对应的样式</li>
+<li>结合htnml模板的响应——<code>render()</code></li>
+<li>重定向响应——<code>redirect(new_url)</code>，收到这个响应的用户会对新的url发起请求</li>
+</ul>
+<h3 id="表单机制"><a href="#表单机制" class="headerlink" title="表单机制"></a>表单机制</h3><p>在html中设置表单时，注意django的csrf_token机制，需要加上<code>&#123;% csrf_token %&#125;</code>标签</p>
+<pre class="line-numbers language-html" data-language="html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>form</span> <span class="token attr-name">method</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>post<span class="token punctuation">"</span></span> <span class="token attr-name">action</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>/login/<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+    &#123;% csrf_token %&#125;
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>text<span class="token punctuation">"</span></span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>username<span class="token punctuation">"</span></span> <span class="token attr-name">placeholder</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>用户名<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>password<span class="token punctuation">"</span></span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>pwd<span class="token punctuation">"</span></span> <span class="token attr-name">placeholder</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>密码<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>submit<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>提交<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>form</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>同时在对应的路由的视图函数中，可以根据请求方法的不同，做出不同的响应（如果只是GET，就返回登录页面；如果是POST，就解析提交的用户名和密码，进行验证，返回结果）</p>
+<h2 id="九、数据库操作"><a href="#九、数据库操作" class="headerlink" title="九、数据库操作"></a>九、数据库操作</h2><p>django自带了ORM，可以帮助我们对数据库操作，因此我们只要学习django的ORM就可以完成对数据库的操作了。</p>
+<p>django可以对数据库的操作有：</p>
+<ul>
+<li>创建、删除、修改表（table）</li>
+<li>对表中的数据进行增删改查</li>
+</ul>
+<h3 id="创建和修改表、字段"><a href="#创建和修改表、字段" class="headerlink" title="创建和修改表、字段"></a>创建和修改表、字段</h3><p>在APP文件夹下的<code>models.py</code>中进行修改，并进行数据库迁移的两条指令：</p>
+<p>只要在这个文件中，写了继承了<code>models.Model</code>的类，django就会帮我们在数据库中创建<code>&lt;app名_小写类名&gt;</code>的表。如上文中写过的：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">class</span> <span class="token class-name">Article</span><span class="token punctuation">(</span>models<span class="token punctuation">.</span>Model<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    title <span class="token operator">=</span> models<span class="token punctuation">.</span>CharField<span class="token punctuation">(</span>max_length<span class="token operator">=</span><span class="token number">30</span><span class="token punctuation">)</span>  <span class="token comment"># 设置一个属性为标题，对应数据库中的字符型，最大长度为30</span>
+    content <span class="token operator">=</span> models<span class="token punctuation">.</span>TextField<span class="token punctuation">(</span><span class="token punctuation">)</span>  <span class="token comment"># 设置内容属性，对应数据库中的文本型</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>此时，因为我们的APP叫做<code>article</code>，所以MySQL数据库中，就创建了<code>article_article</code>的表，并创建了<code>title</code>和<code>content</code>字段。</p>
+<p>如果此时需要删除旧字段，则直接在类中删去对应属性，并进行数据库迁移即可；如果需要添加新的字段，考虑到数据库可能原有数据，此时需要为新字段<strong>设置默认值或允许为空</strong>。</p>
+<ul>
+<li><p>设置默认值：<code>data = models.TextField(default=&quot;hello&quot;)</code></p>
+</li>
+<li><p>允许为空： <code>data = models.TextField(null=True, blank=True)</code></p>
+</li>
+</ul>
+<p><strong>注意：每次调整了<code>models.py</code>后都需要执行两条数据库迁移的命令</strong></p>
+<h3 id="表中数据的增删改查"><a href="#表中数据的增删改查" class="headerlink" title="表中数据的增删改查"></a>表中数据的增删改查</h3><p>先从<code>models.py</code>中导入模型类，使用类方法进行增删改查，这里以上面的<code>Article</code>为例</p>
+<ul>
+<li><p>查询</p>
+<ul>
+<li><p>获取所有数据</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">datas <span class="token operator">=</span> Article<span class="token punctuation">.</span>objects<span class="token punctuation">.</span><span class="token builtin">all</span><span class="token punctuation">(</span><span class="token punctuation">)</span>  <span class="token comment"># 得到的是一个QuerySet类型的对象</span>
+<span class="token comment"># 遍历这个对象，会得到&lt;Article: Article object (1)> ...，即为实际查到的一行数据</span>
+<span class="token comment"># 每行数据显示的名称可以通过改变模型类中的__str__方法实现</span>
+<span class="token comment"># 获取数据的分量（不同字段的对应值），可以通过访问属性的方法实现</span>
+<span class="token comment"># 如： data.first().title  first()方法是取出QuerySet的第一个数据</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+<li><p>获取筛选后的数据</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">data <span class="token operator">=</span> Article<span class="token punctuation">.</span>objects<span class="token punctuation">.</span><span class="token builtin">filter</span><span class="token punctuation">(</span><span class="token builtin">id</span><span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">.</span>first<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token comment"># 因为即使只查到了返回的也是QuerySet还需要用first()</span>
+<span class="token comment"># 这里限制了返回的对象的id为1</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></li>
+</ul>
+</li>
+<li><p>添加数据</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">Article<span class="token punctuation">.</span>objects<span class="token punctuation">.</span>create<span class="token punctuation">(</span>title<span class="token operator">=</span><span class="token string">"four"</span><span class="token punctuation">,</span> content <span class="token operator">=</span> <span class="token string">"article four"</span><span class="token punctuation">)</span>
+<span class="token comment"># 直接添加一条新数据，没写到的字段必须是有默认值或者允许为空的</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></li>
+<li><p>删除数据</p>
+<ul>
+<li><p>删除指定数据</p>
+<pre class="line-numbers language-none"><code class="language-none">Article.objects.filter(id&#x3D;1).delete()  # 删除所有id为1的数据<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
+<li><p>删除所有数据</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">Article<span class="token punctuation">.</span>objects<span class="token punctuation">.</span><span class="token builtin">all</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>delete<span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
+</ul>
+</li>
+<li><p>更新数据</p>
+<ul>
+<li><p>更新所有数据的分量</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">Article<span class="token punctuation">.</span>objects<span class="token punctuation">.</span><span class="token builtin">all</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>update<span class="token punctuation">(</span>title<span class="token operator">=</span><span class="token string">"None"</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
+<li><p>更新特定数据的分量</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">Article<span class="token punctuation">.</span>objects<span class="token punctuation">.</span><span class="token builtin">filter</span><span class="token punctuation">(</span><span class="token builtin">id</span><span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">.</span>update<span class="token punctuation">(</span>title<span class="token operator">=</span><span class="token string">"None"</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
+</ul>
+</li>
+</ul>
+
+      </div>
+      <div class="post-tags-categories">
+        
+        <div class="tags">
+          
+            <a href="/tags/Python/" class="">
+              Python
+            </a>
+          
+            <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="">
+              学习笔记
+            </a>
+          
+            <a href="/tags/Django/" class="">
+              Django
+            </a>
+          
+        </div>
+        
+      </div>
+      
+        <div class="copyright">
+  <ul class="post-copyright">
+    <li class="post-copyright-author">
+    <strong>作者:  </strong>Desline</a>
+    </li>
+    <li class="post-copyright-link">
+    <strong>文章链接:  </strong>
+    <a href="/2022/01/26/Django学习笔记（一）/" target="_blank" title="Django学习笔记（一）">https://my.desline.top/2022/01/26/Django学习笔记（一）/</a>
+    </li>
+    <li class="post-copyright-license">
+      <strong>版权声明:   </strong>
+      本网站所有文章除特别声明外,均采用 <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
+      许可协议。转载请注明出处!
+    </li>
+  </ul>
+<div>
+      
+    </article>
+    <!-- 上一篇文章和下一篇文章 -->
+    
+      <!-- 文章详情页的上一页和下一页 -->
+<div class="post-nav">
+
+
+
+
+
+  
+  <div class="post-nav-next post-nav-item">
+    <div class="post-nav-img lazyload" data-original="/medias/11.jpg" style="background-size: cover; 
+      background-position: center center;">
+    </div>
+    <a href="/2021/08/15/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6%E4%B8%8ESolidity%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%80%EF%BC%89/" class="post-nav-link">
+      <div class="title">
+        下一篇: <i class="fa fa-angle-right"></i>
+        <div class="title-text">智能合约与Solidity学习（一）</div>
+      </div>
+      <!-- <div class="content">
+        智能合约与Solidity学习心得（一）一、起源智能合约(Smart Contract)，顾名思义，是具有“智能”的合约
+      </div> -->
+    </a>
+  </div>
+
+</div>
+
+    
+    
+
+    <!-- 打赏 -->
+    
+
+    <!-- 分享 -->
+    
+      <!-- https://github.com/overtrue/share.js -->
+<!-- 文章详情页的分享 -->
+<div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+
+<script src="/js/shareJs/social-share.min.js"></script>
+</script>
+
+<style>
+  .social-share {
+    margin: 20px 0;
+  }
+</style>
+
+
+    
+    
+    <!-- 评论 -->
+    <!-- 评论 -->
+
+  <div id="myComment">
+    
+      
+<section id="comments" style="padding: 1em; margin: 15px auto;"
+	class="animated bounceInUp">
+	<div id="vcomment" class="comment"></div>
+</section>
+<style>
+	#comments {
+		background: rgba(255,255,255,0.9);
+	}
+	#veditor {
+		background-image: url('https://img.zcool.cn/community/01a253594c71cfa8012193a329a77f.gif');
+		background-size: contain;
+		background-repeat: no-repeat;
+		background-position: right;
+		background-color: rgba(255, 255, 255, 0);
+		resize: vertical;
+	}
+	#veditor:focus{
+		background-position-y: 200px;
+		transition: all 0.2s ease-in-out 0s;
+	}
+	#vcomment .vcards .vcard .vh .vhead .vtag.vvisitor {
+		background-color: #42b983;
+	}
+	.v[data-class=v] .vbtn:active, .v[data-class=v] .vbtn:hover {
+		color: #42b983;
+		border-color: #42b983;
+	}
+	#vcomment .vcards .vcard .vhead .vsys i {
+		display: none;
+	}
+	/* 底部valine链接 */
+	#vcomment .vpower {
+		display: none;
+	}
+	
+	/* 底下注释是修改 名称和邮箱和网址输入框的样式 */
+	/* #vcomment .vheader {
+		display: flex;
+		justify-content: space-around;
+	}
+	
+	#vcomment .vheader .vnick {
+		width: 31%;
+		border: 2px solid #dedede;
+		padding-left: 10px;
+		padding-right: 10px;
+		border-radius: 5px
+	}
+
+	#vcomment .vheader .vmail {
+		width: 31%;
+		border: 2px solid #dedede;
+		padding-left: 10px;
+		padding-right: 10px;
+		border-radius: 5px
+	}
+
+	#vcomment .vheader .vlink {
+		width: 31%;
+		border: 2px solid #dedede;
+		padding-left: 10px;
+		padding-right: 10px;
+		border-radius: 5px
+	} */
+
+	img.vimg {
+		transition: all 1s;
+		/* 头像旋转时间为 1s */
+	}
+
+	img.vimg:hover {
+		transform: rotate(360deg);
+		-webkit-transform: rotate(360deg);
+		-moz-transform: rotate(360deg);
+		-o-transform: rotate(360deg);
+		-ms-transform: rotate(360deg);
+	}
+
+	#vcomment .vcards .vcard {
+		padding: 15px 20px 0 20px;
+		border-radius: 10px;
+		margin-bottom: 15px;
+		box-shadow: 0 0 4px 1px rgba(0, 0, 0, .12);
+		transition: all .3s
+	}
+
+	#vcomment .vcards .vcard:hover {
+		box-shadow: 0 0 8px 3px rgba(0, 0, 0, .12)
+	}
+
+	#vcomment .vcards .vcard .vh .vcard {
+		border: none;
+		box-shadow: none;
+	}
+</style>
+    
+  </div>
+
+
+  </div>
+
+  <!-- 目录 -->
+  <!-- 文章详情页右侧目录 -->
+
+  <div class="toc-aside">
+    <div class="toc-main">
+      <div class="toc-aside-title">
+        <i class="fa fa-list-ul" aria-hidden="true"></i><span>本文目录</span>
+        
+          <div class="toc-open-close">本文目录</div>
+        
+      </div>
+      <div class="toc-content">
+        <div class="toc"></div>
+      </div>
+    </div>
+  </div>
+  <!-- js在scripts目录下的的toc.ejs里面 -->
+  
+
+  <script>
+    function openBtnClickFn () {
+      let openOrCloseBtn = $('.toc-aside .toc-aside-title .toc-open-close');
+      let open = eval('' || 'true');
+      openOrCloseBtn.click(function() {
+        if (open === true) {
+          $(".toc-aside").css({'width': 0, 'padding': 0});
+          $(".toc-content").css({'width': 0});
+          $(".toc-aside-title span, .toc-aside-title i").css({'display': 'none'});
+          $(".main-content").css({'width': '75%', 'margin': '10px auto'});
+          open = false;
+        } else {
+          $(".toc-aside").css({'width': '300px', 'padding': '0 10px'});
+          $(".toc-content").css({'width': '300px'});
+          $(".toc-aside-title span, .toc-aside-title i").css({'display': 'inline-block'});
+          $(".main-content").css({'width': '65%', 'margin-right': '10px', 'margin-left': 'calc(35% - 350px)'});
+          open = true;
+        }
+      });
+    };
+    openBtnClickFn();
+    document.addEventListener('pjax:complete', function () {
+      openBtnClickFn();
+    })
+  </script>
+
+
+  
+
+  <!-- 图片放大 Wrap images with fancybox support -->
+  <script src="/js/wrapImage.js"></script>
+</div>
+
+<!-- 文章详情页背景图 -->
+<div id="appBgSwiper" style="position: fixed;left: 0;top: 0;width: 100%;height: 100%;z-index: -2;" :style="{'background-color': bgColor ? bgColor : 'transparent'}">
+    <transition-group tag="ul" :name="names">
+        <li v-for='(image,index) in img' :key='index' v-show="index === mark" class="bg-swiper-box">
+            <img :src="image" class="bg-swiper-img">
+        </li>
+    </transition-group>
+</div>
+<script>
+    var vm = new Vue({
+        el: '#appBgSwiper',
+        data: {
+            names: '' || 'fade' || 'fade', // translate-fade fade
+            mark: 0,
+            img: [],
+            bgColor: '',
+            time: null
+        },
+        methods: {   //添加方法
+            change(i, m) {
+                if (i > m) {
+                    // this.names = 'fade';
+                } else if (i < m) {
+                    // this.names = 'fade';
+                } else {
+                    return;
+                }
+                this.mark = i;
+            },
+            prev() {
+                // this.names = 'fade';
+                this.mark--;
+                if (this.mark === -1) {
+                    this.mark = 3;
+                    return
+                }
+            },
+            next() {
+                // this.names = 'fade';
+                this.mark++;
+                if (this.mark === this.img.length) {
+                    this.mark = 0;
+                    return
+                }
+            },
+            autoPlay() {
+                // this.names = 'fade';
+                this.mark++;
+                if (this.mark === this.img.length) {
+                    this.mark = 0;
+                    return
+                }
+            },
+            play() {
+                let bgImgDelay = '' || '180000'
+                let delay = parseInt(bgImgDelay) || 180000;
+                this.time = setInterval(this.autoPlay, delay);
+            },
+            enter() {
+                clearInterval(this.time);
+            },
+            leave() {
+                this.play();
+            }
+        },
+        created() {
+            this.play()
+        },
+        beforeDestroy() {
+            clearInterval(this.time);
+        },
+        mounted() {
+            let prop = ''|| '';
+            let isImg = prop.includes('.bmp') || prop.includes('.jpg') || prop.includes('.png') || prop.includes('.tif') || prop.includes('.gif') || prop.includes('.pcx') || prop.includes('.tga') || prop.includes('.exif') || prop.includes('.fpx') || prop.includes('.psd') || prop.includes('.cdr') || prop.includes('.pcd') || prop.includes('.dxf') || prop.includes('.ufo') || prop.includes('.eps') || prop.includes('.ai') || prop.includes('.raw') || prop.includes('.WMF') || prop.includes('.webp') || prop.includes('.jpeg') || prop.includes('http://') || prop.includes('https://') 
+            if (isImg) {
+                let img = prop.split(',');
+                let configRoot = '/'
+                let arrImg = [];
+                img.forEach(el => {
+                    var Expression=/http(s)?:\/\/([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?/;
+			        var objExp = new RegExp(Expression);
+
+                    if(objExp.test(el)) {
+                        // http or https
+                        arrImg.push(el);
+                    } else {
+                        // 非http or https开头
+                        // 本地文件
+                        let firstStr = el.charAt(0);
+                        if (firstStr == '/') {
+                            el = el.substr(1); // 删除第一个字符 '/',因为 configRoot最后一个字符为 /
+                        }
+                        el = configRoot + el;
+                        arrImg.push(el);
+                    }
+                })
+                this.img = arrImg;
+            } else {
+                this.bgColor = prop;
+            }
+        }
+    })
+</script>
+
+<style>
+    .bg-swiper-box {
+        position: absolute;
+        display: block;
+        width: 100%;
+        height: 100%;
+    }
+    .bg-swiper-img {
+        object-fit: cover;
+        width: 100%;
+        height: 100%;
+    }
+</style>
+
+    </main>
+
+    <!-- 页脚 -->
+    <div class="footer bg-color">
+  <div class="footer-main">
+    <div class="link">
+      
+        
+          <a href="mailto:2418233285@qq.com" class="social">
+            
+              <i class="fa fa-envelope" aria-hidden="true"></i>
+            
+          </a>
+        
+      
+        
+          <a target="_blank" rel="noopener" href="https://github.com/desline4709" class="social">
+            
+              <i class="fa fa-github" aria-hidden="true"></i>
+            
+          </a>
+        
+      
+    </div>
+    <div class="footer-copyright">
+      <p>Copyright © 2021 - 2022 <a target="_blank" rel="noopener" href="https://github.com/desline4709">desline</a> | Powered by <a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/docs/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/yuang01/theme">Bamboo</a> </p>
+
+    </div>
+    <div class="footer-custom">
+      
+    </div>
+    <!-- 不蒜子统计 -->
+    
+      
+  <!-- 不蒜子统计 -->
+  <span id="busuanzi_container_site_pv">
+        <i class="fa fa-eye" aria-hidden="true"></i>本站总访问量：<span id="busuanzi_value_site_pv"></span> 次
+  </span>
+  <span class="post-meta-divider">|</span>
+  <span id="busuanzi_container_site_uv" style='display:none'>
+        <i class="fa fa-users" aria-hidden="true"></i>本站访客数：<span id="busuanzi_value_site_uv"></span> 人
+  </span>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" data-pjax></script>
+
+    
+  </div>
+</div>
+
+
+    <!-- 渲染暗黑按钮 -->
+    
+      <div class="dark">
+  <div class="dark-content">
+    <i class="fa fa-moon-o" aria-hidden="true"></i>
+    <!-- <span>关灯</span> -->
+  </div>
+  
+</div>
+
+<script>
+  $(function() {
+    let isDark = JSON.parse(localStorage.getItem('dark'))  || JSON.parse('false');
+    if (isDark) {
+      $(".dark-content").replaceWith(
+          `
+          <div class='dark-content'>
+            <i class="fa fa-lightbulb-o" aria-hidden="true"></i>
+          </div>
+          `
+        );
+    }
+    $('.dark').click(function() {
+      if ($(document.body).is('.darkModel')) {
+        $(document.body).removeClass('darkModel');
+        localStorage.setItem('dark', false);
+        $(".dark-content").replaceWith(
+          `
+          <div class='dark-content'>
+            <i class="fa fa-moon-o" aria-hidden="true"></i>
+          </div>
+          `
+        );
+      } else {
+        $(document.body).addClass('darkModel');
+        localStorage.setItem('dark', true);
+        $(".dark-content").replaceWith(
+          `
+          <div class='dark-content'>
+            <i class="fa fa-lightbulb-o" aria-hidden="true"></i>
+          </div>
+          `
+        );
+      }
+    })
+  })
+</script>
+    
+    <!-- 渲染回到顶部按钮 -->
+    
+      <div class="goTop top-btn-color" pointer>
+  <i class="fa fa-arrow-up" aria-hidden="true"></i>
+</div>
+<script src="/js/goTop.js"></script>
+    
+    <!-- 渲染左下角音乐播放器 -->
+    
+      <link rel="stylesheet" href="/js/aplayer/APlayer@1.10.1.min.css">
+<style>
+.aplayer .aplayer-lrc p {
+  
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 16px !important;
+}
+
+.aplayer .aplayer-lrc p.aplayer-lrc-current {
+  
+  font-size: 15px;
+  color: #42b983;
+}
+
+
+.aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
+  left: -66px !important;
+}
+
+.aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
+  left: 0px !important;
+}
+
+
+</style>
+<meting-js  
+  class=""
+  server="netease"
+  type="song"
+  id="446247397"
+  fixed='true'
+  autoplay='true'
+  theme='#42b983'
+  loop='one'
+  order='random'
+  preload='auto'
+  volume='0.7'
+  list-folded='true'
+>
+</meting-js>
+
+<!-- <style>
+  #aplayer {
+    position: fixed;
+    left: 0;
+    bottom: 300px;
+  }
+</style> -->
+<script src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+    
+
+    <!-- 图片放大 -->
+    
+      <script src="/js/fancybox/jquery.fancybox.min.js"></script>
+    
+
+    <!-- 百度解析 -->
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <!-- 背景彩带 -->
+    
+      <script type="text/javascript" size="100" alpha='0.4' zIndex="-1" src="/js/ribbon.min.js"></script>
+    
+    
+    <script src="/js/app.js" data-pjax></script>
+    
+    <!-- 文章目录所需js -->
+<link href="/js/tocbot/tocbot.css" rel="stylesheet">
+<script src="/js/tocbot/tocbot.min.js"></script>
+
+<script>
+  var headerEl = 'h2, h3, h4',  //headers 
+      content = '.post-detail',//文章容器
+      idArr = {};  //标题数组以确定是否增加索引id
+      //add #id
+  var option = {
+    // Where to render the table of contents.
+    tocSelector: '.toc',
+    // Where to grab the headings to build the table of contents.
+    contentSelector: content,
+    // Which headings to grab inside of the contentSelector element.
+    headingSelector: headerEl,
+    scrollSmooth: true,
+    scrollSmoothOffset: -80,
+    headingsOffset: -($(window).height() * 0.4 - 45),
+    positionFixedSelector: '.toc-main',
+    positionFixedClass: 'is-position-fixed',
+    fixedSidebarOffset: 'auto',
+  }
+  if ($('.toc').length > 0) {
+
+    $(content).children(headerEl).each(function () {
+      //去除空格以及多余标点
+      var headerId = $(this).text().replace(/[\s|\~|`|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\_|\+|\=|\||\|\[|\]|\{|\}|\;|\:|\"|\'|\,|\<|\.|\>|\/|\?|\：|\，|\。]/g, '');
+
+      headerId = headerId.toLowerCase();
+      if (idArr[headerId]) {
+        //id已经存在
+        $(this).attr('id', headerId + '-' + idArr[headerId]);
+        idArr[headerId]++;
+      }
+      else {
+        //id未存在
+        idArr[headerId] = 1;
+        $(this).attr('id', headerId);
+      }
+    });
+
+    tocbot.init(option);
+    
+  }
+
+
+  document.addEventListener('pjax:send', function () {
+    if ($('.toc').length) {
+      tocbot.destroy();
+    }
+  });
+
+  document.addEventListener('pjax:complete', function () {
+    if ($('.toc').length) {
+      tocbot.init(option);
+    }
+  });
+
+  
+</script>
+
+<style>
+.is-position-fixed {
+  position:sticky !important;
+  top: 74px;
+}
+.toc-main ul {
+  counter-reset: show-list;
+}
+.toc-main ul li::before {
+  content: counter(item)".";
+  display: block;
+  position: absolute;
+  left: 12px;
+  top:0;
+}
+/* .toc > .toc-list {
+  padding-left: 35px;
+}
+.toc>.toc-list li {
+  list-style: decimal;
+}
+.toc-list {
+  padding-left: 25px;
+} */
+</style> 
+
+<!-- 渲染issues标签里的内容 -->
+<script>
+  function loadIssuesJS() {
+    if ($(".post-detail").find(".issues-api").length == 0) {
+      return;
+    } 
+    loadScript('/js/issues/index.js');
+  };
+  $(function () {
+    loadIssuesJS();
+  });
+  document.addEventListener('pjax:complete', function () {
+    if (typeof IssuesAPI == "undefined") {
+      loadIssuesJS();
+    }
+  })
+</script>
+
+<!-- div滚动到显示区域的动画 -->
+
+  <script src="/js/aos/aos.js"></script>
+  <script>
+    // https://github.com/michalsnik/aos
+    var themeOffset = parseInt('120') || 120;
+    var themeDelay = parseInt('0') || 0;
+    var themeDuration = parseInt('400') || 400;
+    var themeEasing = 'ease' || 'ease';
+    var themeOnce = eval('true') || false;
+    var themeMirror = eval('false') || false;
+    var themeAnchorPlacement = 'top-bottom' || 'top-bottom';
+    AOS.init({
+      // Global settings:
+      disable: false, // accepts following values: 'phone', 'tablet', 'mobile', boolean, expression or function
+      startEvent: 'DOMContentLoaded', // name of the event dispatched on the document, that AOS should initialize on
+      initClassName: 'aos-init', // class applied after initialization
+      animatedClassName: 'aos-animate', // class applied on animation
+      useClassNames: false, // if true, will add content of `data-aos` as classes on scroll
+      disableMutationObserver: false, // disables automatic mutations' detections (advanced)
+      debounceDelay: 50, // the delay on debounce used while resizing window (advanced)
+      throttleDelay: 99, // the delay on throttle used while scrolling the page (advanced)
+
+      // Settings that can be overridden on per-element basis, by `data-aos-*` attributes:
+      offset: themeOffset, // offset (in px) from the original trigger point
+      delay: themeDelay, // values from 0 to 3000, with step 50ms
+      duration: themeDuration, // values from 0 to 3000, with step 50ms
+      easing: themeEasing, // default easing for AOS animations
+      once: themeOnce, // whether animation should happen only once - while scrolling down
+      mirror: themeMirror, // whether elements should animate out while scrolling past them
+      anchorPlacement: themeAnchorPlacement, // defines which position of the element regarding to window should trigger the animation
+
+    });
+
+    document.addEventListener('pjax:complete', function () {
+      AOS.refresh();
+    })
+  </script>
+
+
+<!-- 输入框打字特效 -->
+<!-- 输入框打字特效 -->
+
+  <script src="/js/activate-power-mode.js"></script>
+  <script>
+    POWERMODE.colorful = true;  // 打开随机颜色特效
+    POWERMODE.shake = false;    // 关闭输入框抖动
+    document.body.addEventListener('input', POWERMODE);//监听打字事件
+  </script>
+
+
+<!-- markdown代码一键复制功能 -->
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/v-plugs-ayu/lib/ayu.css">
+  <script src="https://cdn.jsdelivr.net/npm/v-plugs-ayu/lib/ayu.umd.min.js"></script>
+  <script src="/js/clipboard/clipboard.min.js"></script>
+  <div id="appCopy">
+  </div>
+  <script data-pjax>
+    var vm = new Vue({
+      el: '#appCopy',
+      data: {
+      },
+      computed: {
+      },
+      mounted() {
+        const that = this;
+        var copy = '复制';
+        /* code */
+        var initCopyCode = function () {
+          var copyHtml = '';
+          copyHtml += '<button class="btn-copy" data-clipboard-snippet="" style="position:absolute;top:0;right:0;z-index:1;">';
+          copyHtml += '<i class="fa fa-copy"></i><span>' + copy + '</span>';
+          copyHtml += '</button>';
+          $(".post-detail pre").not('.gutter pre').wrap("<div class='codeBox' style='position:relative;width:100%;'></div>")
+          $(".post-detail pre").not('.gutter pre').before(copyHtml);
+          new ClipboardJS('.btn-copy', {
+            target: function (trigger) {
+              return trigger.nextElementSibling;
+            }
+          });
+        }
+        initCopyCode();
+        $('.btn-copy').unbind('click').bind('click', function () {
+          doSomething();
+        })
+        $(document).unbind('keypress').bind('keypress', function (e) {
+          if (e.ctrlKey && e.keyCode == 67) {
+            doSomething();
+            // 返回false, 防止重复触发copy事件  
+            // return false;
+          }
+        })
+        //  监听 ctrl + c事件  
+        // $(document).unbind('keypress').bind('keypress', function (e) {
+        //   if (e.ctrlKey && e.keyCode == 67) {
+        //     doSomething();
+        //     // 返回false, 防止重复触发copy事件  
+        //     return false;
+        //   }
+        // })
+
+        // // 鼠标右键的复制事件  
+        // $(document).unbind('copy').bind('copy', function (e) {
+        //   doSomething();
+        // });
+
+        function doSomething() {
+          that.$notify({
+            title: "成功",
+            content: "内容已复制，请遵守相关授权协议哦QWQ~~",
+            type: 'success'
+          })
+        }
+      },
+      methods: {
+      },
+      created() { }
+    })
+  </script>
+
+
+<!-- 图片懒加载 -->
+<script src="/js/lazyload/lazyload@1.9.1.js"></script>
+<script data-pjax>
+  $(function () {
+    $("div.lazyload, img.lazyload, a.lazyload").lazyload(
+      {
+        effect: "show",
+        placeholder: "https://img10.360buyimg.com/ddimg/jfs/t1/159345/8/2271/222193/5ff7b36fEe49f5663/a95287c20385127f.gif"    //图片未加载出来时显示的占位图
+      }
+    );
+  });
+</script>
+
+<!-- 评论所需js -->
+
+    
+        <!-- 弹幕所需的css和js -->
+        
+<!-- 具体js，请前往valine/script.ejs查看 -->
+
+        <script>
+  var requiredFields = '';
+  requiredFields = requiredFields.split(',');
+  comment_el = '.comment';
+  let looperValine = null;
+  load_valine = function () {
+    if ($(comment_el).length) {
+      var valine = new Valine({
+        el: '#vcomment',
+        path: window.location.pathname,
+        notify: false,
+        verify: false,
+        app_id: "",
+        app_key: "",
+        placeholder: "客官，说点什么吧",
+        avatar: "",
+        master: "",   //博主邮箱md5
+        tagMeta: ["博主","小伙伴","访客"],     //标识字段名
+        friends: "",
+        metaPlaceholder: { "nick": "昵称/QQ号", "mail": "邮箱" },
+        requiredFields: requiredFields,
+        enableQQ: true,
+      });
+      function debounce(fn) {
+        var timerID = null
+        return function () {
+          var arg = arguments[0]   //获取事件
+          if (timerID) {
+            clearTimeout(timerID)
+          }
+          timerID = setTimeout(function () {
+            fn(arg)              //事件传入函数
+          }, 200)
+        }
+      }
+      //查询评论 valine.Q('*').limit(7) -- 查询所有，限制7条, 下面的的代码是查询当前页面
+      var themeDanmu = eval('false');
+      var themeLoop = eval('false');
+      var themeLooperTime = '5000' || 5000;
+      var speed = '40' || 20;
+      var isBarrager = true;
+      if (themeDanmu == true) {
+        do_barrager();
+        if ($('.danmuBox').length <= 0) {
+          $('.navbar').append('<div class="danmuBox"><div class="danmuBtn open"><span class="danmuCircle"></span><span class="danmuText">弹幕</span></div></div>');
+        }
+        $('.danmuBtn').on('click', debounce(
+          function () {
+            if ($('.danmuBtn').hasClass('open')) {
+              $('.danmuBtn').removeClass('open')
+              clearInterval(looperValine);
+              $.fn.barrager.removeAll();
+            } else {
+              $('.danmuBtn').addClass("open");
+              do_barrager();
+            }
+          }
+        ))
+      }
+      function do_barrager() {
+        isBarrager && valine.Q(window.location.pathname).find().then(function (comments) {
+          // var num = 0; // 可以记录条数，循环调用的时候只取最新的评论放入弹幕中
+          var run_once = true;
+          var looper_time = themeLooperTime;
+          var total = comments.length;
+          // var looper = null;
+          var index = 0;
+          if (total > 0) {
+            barrager();
+          } else {
+            // 当评论数为0的时候，自动关闭弹幕
+            // $('.danmuBtn').removeClass('open');
+          }
+          function barrager() {
+            if (run_once) {
+              //如果是首次执行,则设置一个定时器,并且把首次执行置为false
+              looperValine = setInterval(barrager, looper_time);
+              run_once = false;
+            }
+            var content = comments[index]._serverData.comment;
+            var email = comments[index]._serverData.mail;
+            var link = comments[index]._serverData.link;
+            var newcontent = content.substring(0, 50).replace(/<[^>]+>/g, "");
+            //发布一个弹幕
+            const item = {
+              img: `https://q1.qlogo.cn/g?b=qq&nk=${email}&s=640`, //图片 
+              info: newcontent, //文字 
+              href: link, //链接 
+              close: true, //显示关闭按钮 
+              speed: speed, //延迟,单位秒,默认6 
+              color: '#fff', //颜色,默认白色 
+              old_ie_color: '#000000', //ie低版兼容色,不能与网页背景相同,默认黑色
+            }
+            $('body').barrager(item);
+            //索引自增
+            index++;
+            //所有弹幕发布完毕，清除计时器。
+            if (index == total) {
+              clearInterval(looperValine);
+              if (themeLoop === true) {
+                setTimeout(function () {
+                  do_barrager();
+                }, 5000);
+              } else {
+                $('.danmuBtn').removeClass('open');
+              }
+              return false;
+            }
+
+          }
+        })
+      }
+    }
+  };
+  $(document).ready(load_valine);
+  document.addEventListener('pjax:send', function (e) {
+    
+  })
+  document.addEventListener('pjax:complete', function () {
+    load_valine();
+  });
+</script>
+    
+
+
+<!-- 鼠标点击特效 -->
+<!-- 爱心点击 -->
+
+
+
+
+    <!-- pjax -->
+    
+
+<!-- pjax -->
+
+
+  <script src="/js/pjax@0.2.8/index.js"></script>
+  
+    <!-- 样式位于：source/css/_third-party/pjaxanimate.styl -->
+
+<div class="pjax-animate">
+  
+    <div class="loading-circle"><div id="loader-circle"></div></div>
+    <script>
+      window.ShowLoading = function() {
+        $(".loading-circle").css("display", "block");
+      };
+      window.HideLoading = function() {
+        $(".loading-circle").css("display", "none");
+      }
+    </script>
+  
+	<script>
+    document.addEventListener('pjax:complete', function () {
+      window.HideLoading();
+    })
+    document.addEventListener('pjax:send', function () {
+      window.ShowLoading();
+    })
+    document.addEventListener('pjax:error', function () {
+      window.HideLoading();
+    })
+	</script>
+</div>
+
+  
+
+  <script>
+    var pjax = new Pjax({
+      elements: 'a[href]:not([href^="#"]):not([href="javascript:void(0)"])',   // 拦截正常带链接的 a 标签
+      selectors: ["#pjax-container","title"],                                   // 根据实际需要确认重载区域
+      cacheBust: false,   // url 地址追加时间戳，用以避免浏览器缓存
+      timeout: 5000
+    });
+
+    document.addEventListener('pjax:send', function (e) {
+
+      try {
+        var currentUrl = window.location.pathname;
+        var targetUrl = e.triggerElement.href;
+        var banUrl = [""];
+        if (banUrl[0] != "") {
+          banUrl.forEach(item => {
+            if(currentUrl.indexOf(item) != -1 || targetUrl.indexOf(item) != -1) {
+              window.location.href = targetUrl;
+            }
+          });
+        }
+      } catch (error) {}
+
+      $(window).unbind('resize');
+      $(window).unbind('scroll');
+      $(document).unbind('scroll');
+      $(document).unbind('click');
+      $('body').unbind('click');
+
+    })
+    
+    document.addEventListener('pjax:complete', function () {
+      $('script[data-pjax], .pjax-reload script').each(function () {
+        $(this).parent().append($(this).remove());
+      });
+    });
+
+    document.addEventListener('pjax:error', function (e) {
+      window.location.href = e.triggerElement.href;
+    })
+  </script>
+
+
+
+  </body>
+</html>
